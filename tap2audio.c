@@ -36,7 +36,7 @@ WAV (Microsoft)
 
 #include "tap2audio.h"
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <math.h>
 
 char *outbuf;                /* do away with these sometime! */

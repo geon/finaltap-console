@@ -28,15 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <conio.h>
 #include <ctype.h>
-#include <io.h>
-#include <malloc.h>
 #include <time.h>
-
-#include <dir.h>    /* borland needs this */
-
-#include "scanners\_scanners.h"
 
 #define FTVERSION 2.77
 

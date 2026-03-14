@@ -31,6 +31,7 @@
 
 ---------------------------------------------------------------------------*/  
 
+#include <stdlib.h>
 #include "crc32.h"
 
 static unsigned int *crc_table;	 

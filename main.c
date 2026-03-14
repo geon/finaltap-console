@@ -62,10 +62,12 @@
   
 ---------------------------------------------------------------------*/
 
+#include <unistd.h>
 #include "main.h"
 #include "mydefs.h"
 #include "crc32.h"
 #include "tap2audio.h"
+#include "scanners/_scanners.h"
 
 
 /* Program Options... */

@@ -42,9 +42,22 @@
 
 #include "filesearch.h"
 #include <stdio.h>
-#include <malloc.h>
-#include <io.h>
-#include <dir.h>
+#include <stdlib.h>
+#include <string.h>
+#include<ctype.h>
+
+
+char *strupr(char *str)
+{
+  unsigned char *p = (unsigned char *)str;
+
+  while (*p) {
+     *p = toupper((unsigned char)*p);
+      p++;
+  }
+
+  return str;
+}
 
 /*   Note: main is left here for usage information...
         
@@ -86,67 +99,68 @@ int main(int argc, char* argv[])
 */
 struct node* get_dir_list(char *rootdir)
 {
-   struct node *dirs,*c,*d;
-   struct _finddata_t ffblk;
-   char cwd[1024],temp[1024];
-   long handle;
-   int done,complete;
-    
-   if(chdir(rootdir)==-1)       /* return NULL if rootdir doesnt exist */
-   {
-      printf("\nError: path does not exist");
-      return NULL;
-   }
-      
-   dirs= make_node(rootdir);  /* create root node (root DIR).   */
-   c= dirs;                   /* current node is initially the root node.  */
-   d= dirs;                   /* current directory node is initally the root node.  */
+   return NULL;
 
-   do
-   {
-      getcwd(cwd,256);  /* record current directory path name.  */
-      /* Find/record all directories in the current one (ignores "." and "..")
-        a new node is created (and made current) for each one found...   */
-      handle= _findfirst("*.*", &ffblk);
-      if(handle!=-1)
-      {
-         done=0;            
-         while(done!=-1)
-         {
-            /* valid directory = a directory and not named '.' or '..' */  
-            
-            if(ffblk.attrib & _A_SUBDIR && strcmp(ffblk.name,".")!=0 && strcmp(ffblk.name,"..")!=0)
-            {
-               /* create the name for the new node (CWD+\+DIR name)... */
-               strcpy(temp, cwd);
-               if(temp[strlen(temp)-1]!='\\')
-                  strcat(temp, "\\");
-               strcat(temp, ffblk.name);
-                            
-               /* create and switch to latest node...  */
-               c->link= make_node(temp);
-               if(c->link==NULL)
-                  return NULL;   /* error creating node!. */
-               c= c->link;
-            }
-            done= _findnext(handle, &ffblk);
-         }   
-      }
-      _findclose(handle);  
+   // struct node *dirs,*c,*d;
+   // char cwd[1024],temp[1024];
+   // long handle;
+   // int done,complete;
+    
+   // if(chdir(rootdir)==-1)       /* return NULL if rootdir doesnt exist */
+   // {
+   //    printf("\nError: path does not exist");
+   //    return NULL;
+   // }
       
-      /* switch to next available directory... */
-      if(d->link!=NULL)
-      {
-         chdir((d->link)->name);
-         d= d->link;
-         complete= 0;
-      }
-      else
-         complete=1;   /* we're finished. */
-   }
-   while(!complete);
+   // dirs= make_node(rootdir);  /* create root node (root DIR).   */
+   // c= dirs;                   /* current node is initially the root node.  */
+   // d= dirs;                   /* current directory node is initally the root node.  */
+
+   // do
+   // {
+   //    getcwd(cwd,256);  /* record current directory path name.  */
+   //    /* Find/record all directories in the current one (ignores "." and "..")
+   //      a new node is created (and made current) for each one found...   */
+   //    handle= _findfirst("*.*", &ffblk);
+   //    if(handle!=-1)
+   //    {
+   //       done=0;            
+   //       while(done!=-1)
+   //       {
+   //          /* valid directory = a directory and not named '.' or '..' */  
+            
+   //          if(ffblk.attrib & _A_SUBDIR && strcmp(ffblk.name,".")!=0 && strcmp(ffblk.name,"..")!=0)
+   //          {
+   //             /* create the name for the new node (CWD+\+DIR name)... */
+   //             strcpy(temp, cwd);
+   //             if(temp[strlen(temp)-1]!='\\')
+   //                strcat(temp, "\\");
+   //             strcat(temp, ffblk.name);
+                            
+   //             /* create and switch to latest node...  */
+   //             c->link= make_node(temp);
+   //             if(c->link==NULL)
+   //                return NULL;   /* error creating node!. */
+   //             c= c->link;
+   //          }
+   //          done= _findnext(handle, &ffblk);
+   //       }   
+   //    }
+   //    _findclose(handle);  
+      
+   //    /* switch to next available directory... */
+   //    if(d->link!=NULL)
+   //    {
+   //       chdir((d->link)->name);
+   //       d= d->link;
+   //       complete= 0;
+   //    }
+   //    else
+   //       complete=1;   /* we're finished. */
+   // }
+   // while(!complete);
   
-   return dirs;
+   // return dirs;
 }
 /*---------------------------------------------------------------------------
  Search all directories in linked list 'dirs' for files and build a new
@@ -156,50 +170,52 @@ struct node* get_dir_list(char *rootdir)
 */
 struct node* get_file_list(char *mask, struct node *dirs, int searchtype)
 {
-   struct node *files,*d,*f;
-   struct _finddata_t ffblk;
-   char temp[1024];
-   long handle;
-   int done;
+   return NULL;
 
-   if(dirs==NULL)
-      return NULL;
+   // struct node *files,*d,*f;
+   // struct _finddata_t ffblk;
+   // char temp[1024];
+   // long handle;
+   // int done;
 
-   files= make_node(dirs->name);  /* create root node. (name= root directory name) */
-   f= files;
-   d= dirs;
+   // if(dirs==NULL)
+   //    return NULL;
+
+   // files= make_node(dirs->name);  /* create root node. (name= root directory name) */
+   // f= files;
+   // d= dirs;
    
-   while(d!=NULL)  /* for each directory in the list... */
-   {
-      chdir(d->name);
-      handle= _findfirst(mask, &ffblk);
+   // while(d!=NULL)  /* for each directory in the list... */
+   // {
+   //    chdir(d->name);
+   //    handle= _findfirst(mask, &ffblk);
       
-      if(handle!=-1)
-      {
-         done=0;            
-         while(done!=-1)
-         {
-            /* valid file = NOT a directory! */ 
-            if((ffblk.attrib & _A_SUBDIR)==0)
-            {  
-               strcpy(temp,d->name);
-               if(temp[strlen(temp)-1]!='\\')
-                  strcat(temp,"\\");
-               strcat(temp,ffblk.name);
+   //    if(handle!=-1)
+   //    {
+   //       done=0;            
+   //       while(done!=-1)
+   //       {
+   //          /* valid file = NOT a directory! */ 
+   //          if((ffblk.attrib & _A_SUBDIR)==0)
+   //          {  
+   //             strcpy(temp,d->name);
+   //             if(temp[strlen(temp)-1]!='\\')
+   //                strcat(temp,"\\");
+   //             strcat(temp,ffblk.name);
                            
-               f->link= make_node(temp);
-               f= f->link;
-            }   
-            done= _findnext(handle, &ffblk);
-         }
-      }
-      _findclose(handle);    
+   //             f->link= make_node(temp);
+   //             f= f->link;
+   //          }   
+   //          done= _findnext(handle, &ffblk);
+   //       }
+   //    }
+   //    _findclose(handle);    
       
-      d= d->link;   /* move to next dir in list. */
-      if(searchtype==ROOTONLY)
-         break;
-   }
-   return files;
+   //    d= d->link;   /* move to next dir in list. */
+   //    if(searchtype==ROOTONLY)
+   //       break;
+   // }
+   // return files;
 }
 /*---------------------------------------------------------------------------
  Creates a new node pointer, allocates its memory and initializes it.

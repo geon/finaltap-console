@@ -28,6 +28,8 @@
    multiple TAP files.
 -----------------------------------------------------------------------------*/
 
+#include <unistd.h>
+#include <stdio.h>
 #include "main.h"
 #include "filesearch.h"
 #include "mydefs.h"
@@ -92,7 +94,6 @@ int batchscan(char *rootdir, int includesubdirs, int doscan)
       if(taps[i]==NULL)
       {
          msgout("Batchscan: Malloc Failure!");
-         getch();
          exit(1);
       }   
    }
